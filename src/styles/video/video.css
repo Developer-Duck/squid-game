@@ -1,0 +1,28 @@
+.video_wrap{
+    width: 100%;
+    height: calc(100% - 450px - 80px);
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.cam_show_wrap{
+    width: 800px;
+    height: 100%;
+    /* border: 1px solid black; */
+    margin: 0px 20px;
+}
+.cam_show_wrap > img{
+    width: 100%;
+    height: 100%;
+}
+.out_show{
+    width: 500px; 
+    height: 100%;
+    /* border: 1px solid black; */
+    margin: 0px 20px;
+}
+.out_show > img{
+    width: 100%;
+    height: 100%;
+}
