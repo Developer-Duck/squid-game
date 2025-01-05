@@ -36,6 +36,10 @@
     font-size: 18px;
     word-spacing: 20px;
     line-height: 45px;
+    transition: background-color 0.3s ease;
+}
+.game_end > button:hover, .game_start > button:hover{
+    background-color: #d10057;
 }
 
 .time_control{

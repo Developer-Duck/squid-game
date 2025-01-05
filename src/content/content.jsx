@@ -5,6 +5,7 @@ import Background from "../images/background.png";
 import SquidGameDoll_front from "../images/doll_front.png";
 import SquidGameDoll_back from "../images/doll_back.png";
 import FrontManSub from './frontman.jsx';
+import TreeImage from '../images/tree.png';
 
 function Content() {
     const [gameState, setGameState] = useState({
@@ -63,6 +64,9 @@ function Content() {
                     alt="squid_game_doll" 
                     key={gameState.phase} 
                 />
+            </div>
+            <div className='tree_wrap'>
+                <img src={TreeImage} alt="" />
             </div>
             <FrontManSub />
             <FrontManSub />
