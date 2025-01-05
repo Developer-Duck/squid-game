@@ -24,5 +24,12 @@
 }
 .out_show > img{
     width: 100%;
-    height: 100%;
+    height: calc(100% - 40px);
+}
+.out_txt{
+    width: 100%;
+    height: 40px;
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
 }

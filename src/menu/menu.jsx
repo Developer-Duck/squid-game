@@ -8,6 +8,7 @@ import { IoCloseOutline } from 'react-icons/io5';
 function Menu() {
     const [isGameStarted, setIsGameStarted] = useState(false);
     const [remainingTime, setRemainingTime] = useState(300);
+    const [resetEliminatedPlayer, setResetEliminatedPlayer] = useState(false);
 
     useEffect(() => {
         let timer;
@@ -38,7 +39,7 @@ function Menu() {
             });
             if (response.ok) {
                 // 게임 시작 요청이 성공한 후에 비디오 피드를 시작합니다.
-                await fetch('http://localhost:5000/start_video_feed'); // 추가된 부분
+                await fetch('http://localhost:5000/start_video_feed');
                 setIsGameStarted(true);
                 setRemainingTime(300);
             }
@@ -65,11 +66,19 @@ function Menu() {
             if (stopGameResponse.ok && clearImagesResponse.ok) {
                 setIsGameStarted(false);
                 setRemainingTime(300);
+                setResetEliminatedPlayer(true); // 이미지 초기화 이벤트 전달
             }
         } catch (error) {
             console.error('Failed to stop game:', error);
         }
     };
+
+    useEffect(() => {
+        // resetEliminatedPlayer 상태가 true로 설정된 후 다시 false로 변경
+        if (resetEliminatedPlayer) {
+            setResetEliminatedPlayer(false);
+        }
+    }, [resetEliminatedPlayer]);
 
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
@@ -106,7 +115,7 @@ function Menu() {
                     <img src={SquidGameLogo} alt="Squid Game Logo" />
                 </div>
             </div>
-            {isGameStarted && <Video />}
+            {isGameStarted && <Video resetEliminatedPlayer={resetEliminatedPlayer} />}
         </div>
     );
 }

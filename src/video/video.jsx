@@ -1,58 +1,116 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import '../styles/video/video.css';
 
-function Video() {
-    const [streamKey, setStreamKey] = useState(Date.now());
-    const [latestEliminatedPlayer, setLatestEliminatedPlayer] = useState('');
+const Video = ({ resetEliminatedPlayer }) => {
+  const [streamActive, setStreamActive] = useState(false);
+  const [streamError, setStreamError] = useState(false);
+  const [latestEliminatedPlayer, setLatestEliminatedPlayer] = useState('');
+  const streamRetryCount = useRef(0);
+  const lastFetchedTime = useRef(0);
+  const fetchInterval = 500;
+  const maxRetries = 3;
 
-    const fetchEliminatedPlayers = async () => {
-        try {
-            const response = await fetch('http://localhost:5000/eliminated_players');
-            const files = await response.json();
-            if (files && files.length > 0) {
-                setLatestEliminatedPlayer(files[0]);
-            }
-        } catch (error) {
-            console.error('Error fetching eliminated players:', error);
+  const initializeStream = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/start_video_feed');
+      if (response.ok) {
+        setStreamActive(true);
+        setStreamError(false);
+        streamRetryCount.current = 0;
+      } else {
+        throw new Error('Failed to start video feed');
+      }
+    } catch (error) {
+      console.error('Error initializing stream:', error);
+      setStreamError(true);
+      if (streamRetryCount.current < maxRetries) {
+        streamRetryCount.current += 1;
+        setTimeout(initializeStream, 1000);
+      }
+    }
+  };
+
+  const fetchEliminatedPlayers = async () => {
+    const now = Date.now();
+    if (now - lastFetchedTime.current < fetchInterval) return;
+    lastFetchedTime.current = now;
+
+    try {
+      const response = await fetch('http://localhost:5000/eliminated_players', {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
         }
+      });
+      const files = await response.json();
+      if (files?.length > 0) {
+        setLatestEliminatedPlayer(files[0]);
+      } else {
+        setLatestEliminatedPlayer('');
+      }
+    } catch (error) {
+      console.error('Error fetching eliminated players:', error);
+    }
+  };
+
+  useEffect(() => {
+    initializeStream();
+    const interval = setInterval(fetchEliminatedPlayers, fetchInterval);
+
+    return () => {
+      fetch('http://localhost:5000/stop_video_feed');
+      clearInterval(interval);
+      setStreamActive(false);
     };
+  }, []);
 
-    useEffect(() => {
-        // 컴포넌트가 마운트될 때 비디오 피드 시작
-        fetch('http://localhost:5000/start_video_feed');
+  useEffect(() => {
+    if (resetEliminatedPlayer) {
+      setLatestEliminatedPlayer('');
+    }
+  }, [resetEliminatedPlayer]);
 
-        // 주기적으로 제거된 플레이어 목록 업데이트 (1초마다)
-        const interval = setInterval(fetchEliminatedPlayers, 1000);
+  const handleStreamError = () => {
+    if (streamRetryCount.current < maxRetries) {
+      streamRetryCount.current += 1;
+      setStreamActive(false);
+      setTimeout(initializeStream, 1000);
+    } else {
+      setStreamError(true);
+    }
+  };
 
-        // 컴포넌트가 언마운트될 때 정리
-        return () => {
-            fetch('http://localhost:5000/stop_video_feed');
-            clearInterval(interval);
-        };
-    }, []);
-
-    return (
-        <div className='video_wrap'>
-            <div className='cam_show_wrap'>
-                <img 
-                    key={streamKey}
-                    id="camera-stream" 
-                    src={`http://localhost:5000/video_feed?t=${streamKey}`}
-                    alt="Game Camera Feed"
-               
-                />
-            </div>
-            <div className='out_show'>
-                {latestEliminatedPlayer && (
-                    <img 
-                        src={`http://localhost:5000/eliminated_images/${latestEliminatedPlayer}`}
-                        alt="Latest Eliminated Player"
-                 
-                    />
-                )}
-            </div>
-        </div>
-    );
-}
+  return (
+    <div className="video_wrap">
+      <div className="cam_show_wrap">
+        {streamActive && (
+          <img
+            id="camera-stream"
+            src={`http://localhost:5000/video_feed?t=${Date.now()}`}
+            alt="Game Camera Feed"
+            onError={handleStreamError}
+            style={{ display: streamError ? 'none' : 'block' }}
+          />
+        )}
+        {streamError && (
+          <div className="stream-error">
+            카메라 연결에 문제가 있습니다. 페이지를 새로고침 해주세요.
+          </div>
+        )}
+      </div>
+      <div className="out_show">
+      <span className='out_txt'>탈락자</span>
+        {latestEliminatedPlayer && (
+          <img
+            src={`http://localhost:5000/eliminated_images/${latestEliminatedPlayer}?t=${Date.now()}`}
+            alt="Latest Eliminated Player"
+            loading="lazy"
+          />
+        )}
+        
+      </div>
+    </div>
+  );
+};
 
 export default Video;
