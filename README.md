@@ -64,14 +64,8 @@ npm start
 
 ---
 
-## 📸 스크린샷
-
-![image](https://github.com/user-attachments/assets/31709a8e-bddb-4358-807d-040806065eea)
+## 📸 게임 화면
 ![image](https://github.com/user-attachments/assets/31709a8e-bddb-4358-807d-040806065eea)
 
 ---
 
-## 📄 라이센스
-
-- 3D 모델(`scene.gltf`)은 `license.txt` 참조  
-- 그 외 코드는 자유롭게 수정 및 사용 가능 (MIT 등 라이센스 명시 가능)
