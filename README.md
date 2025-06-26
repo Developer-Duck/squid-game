@@ -66,7 +66,8 @@ npm start
 
 ## 📸 스크린샷
 
-> (원한다면 `src/images/`에 있는 이미지를 사용해서 넣을 수 있습니다.)
+![image](https://github.com/user-attachments/assets/31709a8e-bddb-4358-807d-040806065eea)
+![image](https://github.com/user-attachments/assets/31709a8e-bddb-4358-807d-040806065eea)
 
 ---
 
