@@ -1,70 +1,76 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 🦑 Squid Game Interactive Web
 
-## Available Scripts
+![Squid Game Logo](./src/images/Squid-Game-Logo.png)
 
-In the project directory, you can run:
+**Squid Game Interactive Web**는 오징어 게임의 시각 요소(인형, 프론트맨, 배경 등)를 활용해 웹 기반 인터랙션을 구현한 프로젝트입니다.  
+React와 Three.js를 기반으로 하여 3D 오브젝트(GLTF 파일)를 화면에 출력하며, 간단한 애니메이션/콘텐츠 구성을 제공합니다.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 📁 프로젝트 구조
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```
+squid-game-master/
+├── public/
+│   ├── index.html
+│   └── squid_game_doll/  ← GLTF 3D 모델 및 텍스처
+├── src/
+│   ├── App.js
+│   ├── content/          ← 콘텐츠 컴포넌트 (ex. frontman, 인형 등)
+│   ├── images/           ← 배경/캐릭터 이미지
+│   ├── menu/             ← 메뉴 UI
+│   ├── styles/           ← CSS 분할
+│   └── video/            ← 비디오 컴포넌트
+├── package.json
+└── README.md
+```
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🚀 실행 방법
 
-### `npm run build`
+1. **패키지 설치**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **로컬 서버 실행**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm start
+```
 
-### `npm run eject`
+웹 브라우저에서 [`http://localhost:3000`](http://localhost:3000)으로 접속하여 프로젝트를 확인할 수 있습니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🧩 사용 기술
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- React
+- Three.js
+- WebGL / GLTF Loader
+- CSS 모듈화 구조
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 🎮 주요 기능
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- 🧍‍♀️ 3D GLTF 인형 모델 시각화 (`scene.gltf`)
+- 🖼️ 이미지 기반 UI/UX 구성
+- 🎥 비디오 컴포넌트 구성
+- 🎨 스타일이 분리된 구조적 설계
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 📸 스크린샷
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+> (원한다면 `src/images/`에 있는 이미지를 사용해서 넣을 수 있습니다.)
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 📄 라이센스
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 3D 모델(`scene.gltf`)은 `license.txt` 참조  
+- 그 외 코드는 자유롭게 수정 및 사용 가능 (MIT 등 라이센스 명시 가능)
